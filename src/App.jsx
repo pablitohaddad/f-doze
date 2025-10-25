@@ -2,9 +2,11 @@
 
 import React, { useState, useCallback } from 'react';
 import LoginScreen from './components/LoginScreen'; 
-import BotaoFugitivo from './components/BotaoFugitivo'; 
-import './App.css'; 
+import BotaoFugitivo from './components/BotaoFugitivo';
 import DesafioCSS from './components/DesafioCSS';
+import LocalStorage from './components/LocalStorage'
+import './App.css'; 
+
 
 function App() {
   const [desafioConcluido, setDesafioConcluido] = useState(0); 
@@ -32,7 +34,11 @@ function App() {
                 <DesafioCSS onSucesso={avancarFase} />
             )}
 
-            {desafioConcluido >= 3 && (
+            {desafioConcluido === 3 && (
+                <LocalStorage onSucesso={avancarFase} />
+            )}
+
+            {desafioConcluido >= 4 && (
                 <h2>
                     [STATUS: CONCLUÍDO] <br/>
                     Parabéns! Você concluiu a primeira parte do projeto! Siga <a href="https://x.com/devhaddad" target='_blank' rel='noopener noreferrer'>Pablo Haddad</a> para ver esse projeto!
