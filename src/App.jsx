@@ -12,7 +12,7 @@ import './App.css';
 const FASE_INTRO = 0;
 const FASE_PRIMEIRO_DESAFIO = 1;
 const FASE_ULTIMO_DESAFIO = 4;
-const FASE_RANKING = FASE_ULTIMO_DESAFIO + 1; // 5
+const FASE_RANKING = FASE_ULTIMO_DESAFIO + 1;
 
 function App() {
   const [faseAtual, setFaseAtual] = useState(FASE_INTRO);
@@ -96,7 +96,7 @@ function App() {
           tempoTotal={0}
           loading={loadingRanking}
           ranking={ranking}
-          onStart={iniciarDesafio} />}
+          onStart={iniciarDesafio} />}  
 
         {faseAtual === FASE_PRIMEIRO_DESAFIO && <LoginScreen onSucesso={avancarFase} />}
         {faseAtual === FASE_PRIMEIRO_DESAFIO + 1 && <BotaoFugitivo onSucesso={avancarFase} />}

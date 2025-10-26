@@ -63,13 +63,17 @@ function RankingScreen({ tempoTotal, ranking, onRankingUpdate, loading, isIntro 
                         placeholder="Seu Nome/Alias"
                         required
                         disabled={saving}
-                        style={{ padding: '8px', width: '100%', marginBottom: '10px' }}
+                        style={{ padding: '8px', width: '95%', marginBottom: '10=px' }}
                     />
                     <button type="submit" disabled={saving} style={{ padding: '10px 15px', background: '#007bff', color: 'white' }}>
                         {saving ? 'Salvando...' : 'Salvar Pontuação'}
                     </button>
                 </form>
             )}
+            
+            <p>
+                <span style={{color: '#ffcc00', fontWeight:'bold'}}>{ranking.length}</span> pessoas já jogaram f-doze!
+            </p>
 
             <h3 style={{ marginTop: '40px' }}>TOP 10 GLOBAL</h3>
 
@@ -100,7 +104,7 @@ function RankingScreen({ tempoTotal, ranking, onRankingUpdate, loading, isIntro 
             )}
 
             <p style={{ marginTop: '30px' }}>
-                Siga <a href="https://x.com/devhaddad" target="_blank" rel="noopener noreferrer">Pablo Haddad</a> para ver esse projeto!
+                Veja o <a href="https://github.com/pablitohaddad/f-doze" target="_blank" rel="noopener noreferrer">Codigo Fonte</a> do projeto!
             </p>
         </div>
     );
