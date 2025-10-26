@@ -79,5 +79,5 @@ Este projeto foi criado por **Pablo Haddad** com o objetivo de aprofundar conhec
 
 Se tiver alguma duvida, sinta-se a vontade para me perguntar! Me siga nessas redes sociais:
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/[SeuUsernameAqui])
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/pablohaddad)
 [![Twitter/X](https://img.shields.io/badge/X-000000?style=for-the-badge&logo=x&logoColor=white)](https://x.com/devhaddad)
