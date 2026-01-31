@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { supabase } from './supabaseClient';
+// ...existing code...
 
 import LoginScreen from './components/LoginScreen';
 import BotaoFugitivo from './components/BotaoFugitivo';
@@ -28,24 +28,18 @@ function App() {
 
   const fetchRanking = async () => {
     setLoadingRanking(true);
-    const { data, error } = await supabase
-      .from('ranking')
-      .select('nome, tempo_ms')
-      .order('tempo_ms', { ascending: true })
-      .limit(10);
-
-    if (error) {
+    try {
+      const response = await fetch('http://localhost:8080/api/resultados');
+      const data = await response.json();
+      const lista = Array.isArray(data) ? data : data.content;
+      const rankingFormatado = lista.slice(0, 10).map(item => ({
+        nome: item.nome,
+        tempo: item.tempo_ms
+      }));
+      setRanking(rankingFormatado);
+    } catch (error) {
       console.error('Erro ao buscar ranking:', error);
-      setLoadingRanking(false);
-      return;
     }
-
-    const rankingFormatado = data.map(item => ({
-      nome: item.nome,
-      tempo: item.tempo_ms
-    }));
-
-    setRanking(rankingFormatado);
     setLoadingRanking(false);
   };
 

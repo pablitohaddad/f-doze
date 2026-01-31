@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { supabase } from '../supabaseClient';
+// ...existing code...
 
 const formatTime = (ms) => (ms / 1000).toFixed(2);
 
@@ -24,20 +24,27 @@ function RankingScreen({ tempoTotal, ranking, onRankingUpdate, loading, isIntro 
                 tempo_ms: tempoTotal,
             };
 
-            const { error } = await supabase
-                .from('ranking')
-                .insert([novoRecord]);
-
-            if (error) {
-                alert(`Erro ao salvar no ranking: ${error.message}. Verifique as regras RLS do seu banco.`);
+            try {
+                const response = await fetch('http://localhost:8080/resultados', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(novoRecord)
+                });
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    alert(`Erro ao salvar no ranking: ${errorData.error || response.statusText}`);
+                    setSaving(false);
+                    return;
+                }
+                setSalvo(true);
                 setSaving(false);
-                return;
+                onRankingUpdate();
+            } catch (error) {
+                alert(`Erro ao salvar no ranking: ${error.message}`);
+                setSaving(false);
             }
-
-            setSalvo(true);
-            setSaving(false);
-
-            onRankingUpdate();
         }
     };
 
