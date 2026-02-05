@@ -7,7 +7,7 @@ import DesafioCSS from './components/DesafioCSS';
 import LocalStorage from './components/LocalStorage';
 import IntroScreen from './components/IntroScreen';
 import RankingScreen from './components/RankingScreen';
-import './App.css';
+import { API_RESULTADOS } from './api';
 
 const FASE_INTRO = 0;
 const FASE_PRIMEIRO_DESAFIO = 1;
@@ -29,9 +29,9 @@ function App() {
   const fetchRanking = async () => {
     setLoadingRanking(true);
     try {
-      const response = await fetch('http://localhost:8080/api/resultados');
+      const response = await fetch(API_RESULTADOS);
       const data = await response.json();
-      const lista = Array.isArray(data) ? data : data.content;
+      const lista = Array.isArray(data) ? data : (data.content || []);
       const rankingFormatado = lista.slice(0, 10).map(item => ({
         nome: item.nome,
         tempo: item.tempo_ms
@@ -76,12 +76,13 @@ function App() {
     const tempoAExibir = tempoFinal !== null ? tempoFinal - tempoInicio : tempoDecorrido;
     const segundos = (tempoAExibir / 1000).toFixed(2);
 
-    return <p style={{ color: '#ffcc00', fontSize: '1.2em', margin: '15px 0' }}>Tempo: **{segundos}s**</p>;
+    return <p className="my-4 text-yellow-300">Tempo: **{segundos}s**</p>;
   };
 
   return (
-    <div className="app-container">
-      <div style={{ maxWidth: '900px', width: '100%', margin: '0 auto', padding: '0 20px', boxSizing: 'border-box', textAlign: 'center' }}>
+    <div className="min-h-screen bg-slate-950 text-green-300">
+      <div className="mx-auto w-full max-w-[900px] px-5 py-10 text-center font-mono">
+        <div className="rounded-lg border border-green-500 bg-slate-900/60 p-6 shadow-[0_0_20px_rgba(57,255,20,0.25)]">
 
         {faseAtual >= FASE_PRIMEIRO_DESAFIO && faseAtual <= FASE_ULTIMO_DESAFIO && <Cronometro />}
 
@@ -106,6 +107,7 @@ function App() {
             onRankingUpdate={fetchRanking}
           />
         )}
+        </div>
       </div>
     </div>
   );

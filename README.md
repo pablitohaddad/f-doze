@@ -12,7 +12,7 @@ O desafio é cronometrado, e os melhores tempos são registrados em um Ranking G
 
 * **Níveis de Desafio:** Cada nível explora uma funcionalidade diferente do F12.
 * **Cronômetro Global:** Mede o tempo de conclusão e incentiva a competição.
-* **Ranking Global (Supabase):** Armazenamento persistente do Top 10 via banco de dados.
+* **Ranking Global (API própria):** Armazenamento persistente do Top 10 via backend e banco de dados.
 
 ## 🎮 Jogue Agora!
 
@@ -24,7 +24,7 @@ Pronto para testar suas habilidades no F12? Tente entrar no Top 10!
 
 * **Front-end:** React.js, JavaScript, HTML/CSS
 * **Gerenciamento de Estado:** React Hooks (`useState`, `useEffect`, `useCallback`)
-* **Banco de Dados/Backend:** Supabase (PostgreSQL para Ranking Global)
+* **Banco de Dados/Backend:** API própria (Spring Boot) com PostgreSQL
 
 ## 🤝 Como Contribuir
 
@@ -53,17 +53,13 @@ Para rodar o projeto em sua máquina e contribuir:
     git clone https://github.com/pablitohaddad/f-doze.git
     cd f-doze
     ```
-2.  **Configure o Supabase:**
-    * Logue na sua conta do [Supabase](https://supabase.com/) e crie a tabela **ranking** com as seguintes propriedades:
-      -  id - int8
-      -  nome - text
-      -  tempo_ms - int8
-    * Crie um arquivo `.env.local` na raiz do projeto.
-    * Adicione suas chaves (a tabela `ranking` já deve ter as políticas RLS configuradas para INSERT e SELECT, pesquise para mais):
-        ```env
-        VITE_SUPABASE_URL="https://SEU_PROJETO.supabase.co"
-        VITE_SUPABASE_ANON_KEY="SUA_CHAVE_ANON"
-        ```
+2.  **Configure o backend Java:**
+        * Suba sua API Spring Boot e o banco PostgreSQL.
+        * Crie um arquivo `.env.local` na raiz do projeto.
+        * Adicione a URL da API:
+                ```env
+                VITE_API_URL="http://localhost:8080/api"
+                ```
 4.  **Instale as dependências:**
     ```bash
     npm install
@@ -72,6 +68,30 @@ Para rodar o projeto em sua máquina e contribuir:
     ```bash
     npm run dev
     ```
+
+## 🚀 Deploy no Railway (CI/CD)
+
+O deploy é automático via GitHub Actions. Você precisa criar dois serviços no Railway:
+
+- **Backend** (Dockerfile em `fdoze/Dockerfile`)
+- **Frontend** (Dockerfile na raiz)
+
+### Variáveis/Secrets necessários no GitHub
+
+Configure estes secrets no repositório:
+
+- `RAILWAY_TOKEN`
+- `RAILWAY_PROJECT_ID`
+- `RAILWAY_SERVICE_ID_BACKEND`
+- `RAILWAY_SERVICE_ID_FRONTEND`
+
+### Variáveis no Railway (frontend)
+
+No serviço do frontend, defina:
+
+- `VITE_API_URL` = URL pública do backend, por exemplo: `https://seu-backend.up.railway.app/api`
+
+Após isso, qualquer push na branch `main` dispara o deploy automático.
 
 ## 🧑‍💻 Autor
 

@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import Input from './common/Input';
+import Button from './common/Button';
 
 
 const toUrlEncoded = (data) => {
@@ -13,46 +15,9 @@ const toUrlEncoded = (data) => {
 function LoginScreen({ onSucesso }) {
   const [usuario] = useState('admin');
   const [senha, setSenha] = useState('');
-  const SENHA_CORRETA = "senha_mais_dificil_do_mundo"; 
+  const SENHA_CORRETA = import.meta.env.VITE_DESAFIO_LOGIN_SENHA; 
 
-  const formStyle = {
-    maxWidth: '400px',
-    margin: '20px auto',
-    padding: '25px',
-    backgroundColor: '#0d1117',
-    border: '1px dashed #39ff14',
-    boxShadow: '0 0 10px rgba(57, 255, 20, 0.4)',
-  };
-
-  const inputStyle = {
-    padding: '10px',
-    width: 'calc(100% - 20px)',
-    boxSizing: 'border-box',
-    marginBottom: '15px',
-    backgroundColor: '#010409',
-    color: '#00ff41',
-    border: '1px solid #39ff14',
-    fontFamily: 'Consolas, monospace',
-  };
-  
-  const disabledInputStyle = {
-      ...inputStyle,
-      backgroundColor: '#161b22',
-      color: '#8b949e',
-      cursor: 'not-allowed',
-  };
-
-  const buttonStyle = {
-    marginTop: '15px',
-    padding: '12px 20px',
-    background: '#007bff',
-    color: '#0d1117',
-    border: 'none',
-    cursor: 'pointer',
-    fontWeight: 'bold',
-    textTransform: 'uppercase',
-    transition: 'background-color 0.3s, box-shadow 0.3s',
-  };
+  const disabledInputClass = 'bg-slate-800 text-gray-400 cursor-not-allowed';
   
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -86,33 +51,29 @@ function LoginScreen({ onSucesso }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} style={formStyle}>
-      <h3>Desafio: Login</h3>
+    <form onSubmit={handleSubmit} className="mx-auto my-5 max-w-md rounded-md border border-dashed border-green-400 bg-slate-950 p-6 shadow-[0_0_10px_rgba(57,255,20,0.4)]">
+      <h3 className="text-xl font-semibold text-green-300">Desafio: Login</h3>
       
-      <p>Usuario:</p>
-      <input 
-          type="text" 
-          value={usuario} 
-          disabled 
-          style={disabledInputStyle} 
+      <p className="mt-4 text-sm text-gray-300">Usuario:</p>
+      <Input
+          type="text"
+          value={usuario}
+          disabled
+          className={disabledInputClass}
       />
       
-      <p>Senha:</p>
-      <input 
-        type="password" 
-        value={senha} 
+      <p className="mt-3 text-sm text-gray-300">Senha:</p>
+      <Input
+        type="password"
+        value={senha}
         onChange={(e) => setSenha(e.target.value)}
         placeholder="INSIRA A SENHA AQUI..."
-        style={inputStyle} 
       />
-      <button 
-          type="submit" 
-          style={buttonStyle}
-      >
+      <Button type="submit" className="mt-4 w-full uppercase">
           CONTINUAR
-      </button>
+      </Button>
       
-      <p className="dica-text">
+      <p className="mt-5 border-l-2 border-orange-400 pl-2 text-sm text-orange-300">
           // DICA: As vezes eh errando que se aprende.
       </p>
     </form>
