@@ -1,7 +1,9 @@
 import React from 'react';
+import Input from './common/Input';
+import Button from './common/Button';
 
 function DesafioCSS({ onSucesso }) {
-    const CHAVE_SECRETA = "senha_css_revelada";
+    const CHAVE_SECRETA = import.meta.env.VITE_DESAFIO_CSS_CHAVE;
     const [input, setInput] = React.useState('');
 
     const handleCheck = (e) => {
@@ -29,29 +31,28 @@ function DesafioCSS({ onSucesso }) {
     };
 
     return (
-        <div style={{ textAlign: 'center' }}>
-            <h3>Nível 3: CSS</h3>
-            <p>Uma chave de avanço está nesta página</p>
-            <p>Sua missão é **revelar a chave** inspecionando o código.</p>
+        <div className="text-center">
+            <h3 className="text-xl font-semibold text-green-300">Nível 3: CSS</h3>
+            <p className="text-gray-300">Uma chave de avanço está nesta página</p>
+            <p className="text-gray-300">Sua missão é **revelar a chave** inspecionando o código.</p>
             
-            <div style={{ margin: '30px auto', padding: '10px' }}>
+            <div className="mx-auto my-6 p-2">
                 <span style={chaveStyle}>
                     {CHAVE_SECRETA}
                 </span>
             </div>
 
-            <form onSubmit={handleCheck} style={{ maxWidth: '400px', margin: '20px auto', padding: '15px' }}>
-                <input
+            <form onSubmit={handleCheck} className="mx-auto my-5 max-w-md p-4">
+                <Input
                     type="text"
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     placeholder="Cole a chave revelada aqui..."
-                    style={{ padding: '10px', width: '100%', boxSizing: 'border-box' }}
                 />
-                <button type="submit" style={{ marginTop: '10px', padding: '10px 20px' }}>Verificar Chave</button>
+                <Button type="submit" className="mt-3">Verificar Chave</Button>
             </form>
 
-            <p className="dica-text" style={{ textAlign: 'left', marginTop: '30px' }}>
+            <p className="mt-8 border-l-2 border-orange-400 pl-2 text-left text-sm text-orange-300">
                 // DICA: Esse site esta FEIO de mais.
             </p>
         </div>

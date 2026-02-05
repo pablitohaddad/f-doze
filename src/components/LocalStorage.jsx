@@ -1,8 +1,9 @@
 // src/components/DesafioStorage.js
 import React, { useEffect } from 'react';
+import Button from './common/Button';
 
 const CHAVE_STORAGE = 'nivel_de_acesso';
-const NIVEL_REQUERIDO = 'admin_full';
+const NIVEL_REQUERIDO = import.meta.env.VITE_DESAFIO_LOCAL_STORAGE_ADMIN;
 
 function DesafioStorage({ onSucesso }) {
     
@@ -24,19 +25,19 @@ function DesafioStorage({ onSucesso }) {
     };
 
     return (
-        <div style={{ textAlign: 'center' }}>
-            <h3> Nível 4: Acesso negado.</h3>
-            <p>Seu acesso está restrito. A permissão de avanço está salva localmente no navegador.</p>
-            <p>Você precisa obter a permissão **'{NIVEL_REQUERIDO}'** para avançar.</p>
+        <div className="text-center">
+            <h3 className="text-xl font-semibold text-green-300">Nível 4: Acesso negado.</h3>
+            <p className="text-gray-300">Seu acesso está restrito. A permissão de avanço está salva localmente no navegador.</p>
+            <p className="text-gray-300">Você precisa obter a permissão **'{NIVEL_REQUERIDO}'** para avançar.</p>
 
-            <button 
+            <Button
                 onClick={handleAttempt}
-                style={{ marginTop: '20px', padding: '15px 30px', backgroundColor: '#dc3545', color: 'white', fontSize: '1.2em' }}
+                className="mt-5 bg-red-600 text-white hover:bg-red-500"
             >
                 TENTAR ACESSO ({localStorage.getItem(CHAVE_STORAGE) || 'user_restrito'})
-            </button>
+            </Button>
 
-            <p className="dica-text" style={{ textAlign: 'left', marginTop: '30px' }}>
+            <p className="mt-8 border-l-2 border-orange-400 pl-2 text-left text-sm text-orange-300">
                 // DICA: Cache.
             </p>
         </div>

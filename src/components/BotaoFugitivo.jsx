@@ -29,47 +29,26 @@ function BotaoFugitivo( {onSucesso }){
         };
     }, [onSucesso]);
 
-    const containerStyle = {
-        position: 'relative', 
-        height: '400px', 
-        width: '100%',
-        margin: '20px auto',
-        border: '3px solid #ff00ff',
-        boxShadow: '0 0 15px rgba(255, 0, 255, 0.8)',
-        backgroundColor: '#0d1117',
-        overflow: 'hidden', 
-        boxSizing: 'border-box',
-    };
-    
     const buttonStyle = {
-        position: 'absolute', 
+        position: 'absolute',
         top: position.top,
         left: position.left,
-        transition: 'all 0.1s ease-out', 
-        padding: '15px 25px',
-        backgroundColor: '#ff00ff',
-        color: '#0d1117',
-        border: '3px solid #000000',
-        cursor: 'default',
-        fontSize: '1.4em',
-        fontWeight: 'bold',
-        textShadow: '0 0 5px #000000',
-        boxShadow: '0 0 15px rgba(255, 0, 255, 0.9)',
-        textTransform: 'uppercase'
+        transition: 'all 0.1s ease-out'
     };
 
     return (
-        <div style={containerStyle}>
-            <h3> Desafio 2: cliqueNoBotao()</h3>
+        <div className="relative mx-auto my-5 h-[400px] w-full overflow-hidden border-2 border-fuchsia-500 bg-slate-950 shadow-[0_0_15px_rgba(255,0,255,0.8)]">
+            <h3 className="mb-4 text-lg font-semibold text-fuchsia-300">Desafio 2: cliqueNoBotao()</h3>
 
             <button
-                onMouseMove={handleMouseMove} 
+                onMouseMove={handleMouseMove}
                 style={buttonStyle}
+                className="cursor-default rounded-md border-2 border-black bg-fuchsia-500 px-6 py-3 text-lg font-bold uppercase text-slate-950 shadow-[0_0_15px_rgba(255,0,255,0.9)]"
             >
                 {cliqueNoBotao}
             </button>
-            
-            <p className="dica-text" style={{position: 'absolute', bottom: '10px', left: '10px'}}>
+
+            <p className="absolute bottom-2 left-2 border-l-2 border-orange-400 pl-2 text-sm text-orange-300">
                 // DICA: Console
             </p>
         </div>

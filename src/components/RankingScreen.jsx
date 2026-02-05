@@ -1,109 +1,73 @@
-import React, { useState } from 'react';
-import { supabase } from '../supabaseClient';
 
-const formatTime = (ms) => (ms / 1000).toFixed(2);
+import React, { useState } from 'react';
+import RankingHeader from './Ranking/RankingHeader';
+import RankingForm from './Ranking/RankingForm';
+import RankingList from './Ranking/RankingList';
+import RankingStats from './Ranking/RankingStats';
+import { API_RESULTADOS } from '../api';
 
 function RankingScreen({ tempoTotal, ranking, onRankingUpdate, loading, isIntro = false }) {
     const [nome, setNome] = useState('');
     const [salvo, setSalvo] = useState(false);
     const [saving, setSaving] = useState(false);
 
+
     const recordsMaisRapidos = Array.isArray(ranking)
         ? ranking.filter(record => record.tempo < tempoTotal).length
         : 0;
-
     const posicaoTemporaria = recordsMaisRapidos + 1;
 
     const handleSave = async (e) => {
         e.preventDefault();
         if (nome.trim() && !salvo && !saving) {
             setSaving(true);
-
             const novoRecord = {
                 nome: nome.trim(),
                 tempo_ms: tempoTotal,
             };
-
-            const { error } = await supabase
-                .from('ranking')
-                .insert([novoRecord]);
-
-            if (error) {
-                alert(`Erro ao salvar no ranking: ${error.message}. Verifique as regras RLS do seu banco.`);
+            try {
+                const response = await fetch(API_RESULTADOS, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(novoRecord)
+                });
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    alert(`Erro ao salvar no ranking: ${errorData.error || response.statusText}`);
+                    setSaving(false);
+                    return;
+                }
+                setSalvo(true);
                 setSaving(false);
-                return;
+                onRankingUpdate();
+            } catch (error) {
+                alert(`Erro ao salvar no ranking: ${error.message}`);
+                setSaving(false);
             }
-
-            setSalvo(true);
-            setSaving(false);
-
-            onRankingUpdate();
         }
     };
 
     return (
-        <div style={{ textAlign: 'center' }}>
-            {
-                !isIntro && (<h2>DESAFIO CONCLUÍDO!</h2>)
-            }
-
-            {
-                !isIntro && (<h3 style={{ color: '#ffcc00', borderBottom: 'none' }}>
-                    Seu Tempo: {formatTime(tempoTotal)} segundos
-                </h3>)
-            }
-
+        <div className="text-center">
+            <RankingHeader isIntro={isIntro} tempoTotal={tempoTotal} />
             {(!salvo && !isIntro) && (
-                <form onSubmit={handleSave} style={{ margin: '20px auto', maxWidth: '300px', padding: '15px', border: '1px solid #007bff' }}>
-                    <p>Entre no Ranking Global!</p>
-                    <input
-                        type="text"
-                        value={nome}
-                        onChange={(e) => setNome(e.target.value)}
-                        placeholder="Seu Nome/Alias"
-                        required
-                        disabled={saving}
-                        style={{ padding: '8px', width: '95%', marginBottom: '10=px' }}
-                    />
-                    <button type="submit" disabled={saving} style={{ padding: '10px 15px', background: '#007bff', color: 'white' }}>
-                        {saving ? 'Salvando...' : 'Salvar Pontuação'}
-                    </button>
-                </form>
+                <RankingForm nome={nome} setNome={setNome} saving={saving} onSave={handleSave} />
             )}
-            
-            <p>
-                <span style={{color: '#ffcc00', fontWeight:'bold'}}>{ranking.length}</span> pessoas já jogaram f-doze!
-            </p>
-
-            <h3 style={{ marginTop: '40px' }}>TOP 10 GLOBAL</h3>
-
+            <RankingStats ranking={ranking} />
+            <h3 className="mt-10 text-xl font-semibold text-green-300">TOP 10 GLOBAL</h3>
             {loading ? (
-                <p>Carregando ranking global...</p>
+                <p className="text-gray-200">Carregando ranking global...</p>
             ) : (
                 <>
-                    {!isIntro && (<p style={{ color: '#39ff14' }}>
+                    {!isIntro && (<p className="text-green-300">
                         {salvo ? `Você conquistou o ${posicaoTemporaria}º lugar!` : `Seu tempo lhe daria o ${posicaoTemporaria}º lugar.`}
                     </p>)}
-
-                    <ol style={{ maxWidth: '400px', margin: '15px auto', listStyleType: 'decimal', textAlign: 'left', paddingLeft: '30px' }}>
-                        {ranking.length === 0 ? (<p>Ranking vazio, seja o primeiro a lidera-lo!</p>): ranking.map((record, index) => (
-                            <li
-                                key={index}
-                                style={{
-                                    color: (record.nome === nome && record.tempo === tempoTotal && salvo) ? '#ffcc00' : '#00ff41',
-                                    fontWeight: (record.nome === nome && record.tempo === tempoTotal && salvo) ? 'bold' : 'normal',
-                                    padding: '5px 0',
-                                    listStyleType: 'none'
-                                }}
-                            >
-                                {index + 1}º - {record.nome} ({formatTime(record.tempo)}s)
-                            </li>
-                        ))}
-                    </ol>
+                    <RankingList ranking={ranking} nome={nome} tempoTotal={tempoTotal} salvo={salvo} />
                 </>
             )}
-
-            <p style={{ marginTop: '30px' }}>
+            <p className="mt-8 text-sm text-gray-300">
                 Veja o <a href="https://github.com/pablitohaddad/f-doze" target="_blank" rel="noopener noreferrer">Codigo Fonte</a> do projeto!
             </p>
         </div>
