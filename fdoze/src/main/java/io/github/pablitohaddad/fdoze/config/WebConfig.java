@@ -11,7 +11,11 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         // Permite requisições CORS dos principais ambientes de desenvolvimento
         registry.addMapping("/api/**")
-                .allowedOrigins("http://localhost:5173", "http://localhost:3000")
+            .allowedOrigins(
+                "http://localhost:5173",
+                "http://localhost:3000",
+                "https://f-doze.vercel.app"
+            )
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
                 .allowCredentials(true)
