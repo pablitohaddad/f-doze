@@ -1,5 +1,6 @@
 // src/components/DesafioStorage.js
 import React, { useEffect } from 'react';
+import { Alert, Paper, Stack, Text, Title } from '@mantine/core';
 import Button from './common/Button';
 
 const CHAVE_STORAGE = 'nivel_de_acesso';
@@ -25,22 +26,24 @@ function DesafioStorage({ onSucesso }) {
     };
 
     return (
-        <div className="text-center">
-            <h3 className="text-xl font-semibold text-green-300">Nível 4: Acesso negado.</h3>
-            <p className="text-gray-300">Seu acesso está restrito. A permissão de avanço está salva localmente no navegador.</p>
-            <p className="text-gray-300">Você precisa obter a permissão **'{NIVEL_REQUERIDO}'** para avançar.</p>
+        <Paper withBorder radius="md" p="lg" maw={560} mx="auto" my="md">
+            <Stack align="center" gap="sm">
+            <Title order={3}>Nível 4: Acesso negado</Title>
+            <Text c="dimmed" ta="center">Seu acesso está restrito. A permissão de avanço está salva localmente no navegador.</Text>
+            <Text c="dimmed" ta="center">Você precisa obter a permissão “{NIVEL_REQUERIDO}” para avançar.</Text>
 
             <Button
                 onClick={handleAttempt}
-                className="mt-5 bg-red-600 text-white hover:bg-red-500"
+                mt="xs"
             >
                 TENTAR ACESSO ({localStorage.getItem(CHAVE_STORAGE) || 'user_restrito'})
             </Button>
 
-            <p className="mt-8 border-l-2 border-orange-400 pl-2 text-left text-sm text-orange-300">
-                // DICA: Cache.
-            </p>
-        </div>
+            <Alert variant="light" color="yellow" w="100%">
+                Dica: cache.
+            </Alert>
+            </Stack>
+        </Paper>
     );
 }
 

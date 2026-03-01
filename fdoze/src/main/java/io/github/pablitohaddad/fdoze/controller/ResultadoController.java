@@ -5,6 +5,8 @@ import io.github.pablitohaddad.fdoze.service.ResultadoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -26,7 +28,9 @@ public class ResultadoController {
     }
 
     @GetMapping
-    public Page<ResultadoDTO> list(Pageable pageable) {
+    public Page<ResultadoDTO> list(
+            @PageableDefault(sort = {"tempoMs", "createdAt"}, direction = Sort.Direction.ASC) Pageable pageable
+    ) {
         return service.findAll(pageable);
     }
 

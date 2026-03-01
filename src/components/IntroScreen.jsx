@@ -1,35 +1,28 @@
 import React from 'react';
-import RankingScreen from './RankingScreen';
+import { Anchor, Paper, Stack, Text, Title } from '@mantine/core';
 import Button from './common/Button';
-function IntroScreen({ onStart, tempoTotal, ranking, onRankingUpdate, loading }) {
+function IntroScreen({ onStart }) {
 
     return (
-        <div className="rounded-md border border-green-500 p-6 text-center">
-            <h2 className="text-2xl font-bold text-green-300">BEM-VINDO AO F-DOZE</h2>
+        <Paper withBorder radius="md" p="xl">
+            <Stack align="center" gap="md">
+            <Title order={2}>Salve!</Title>
 
-            <p className="mx-auto my-5 max-w-2xl text-gray-300">
-                Este é um desafio prático para aprender a utilizar a DevTools do seu navegador (pressione F12). Cada nível exige que você utilize uma aba diferente (Network, Console, Elements, etc.) para "quebrar" o front-end e prosseguir.
-            </p>
+            <Text ta="center" maw={700} c="dimmed">
+                Antes de começar o desafio, certifique-se que o seu Inspecionar Elemento está ativado. Para ativar, clique no F12 do seu teclado!
+            </Text>
 
-            <p className="text-lg font-bold text-green-300">
-                Seu tempo começa a contar assim que você apertar **INICIAR**.
-            </p>
+            <Text fw={600}>Seu tempo começa a contar assim que você apertar INICIAR.</Text>
 
-            <Button onClick={onStart} className="mt-8 bg-yellow-400 text-slate-950 hover:bg-yellow-300">
-                INICIAR DESAFIO E CRONÔMETRO
+            <Button onClick={onStart} size="md">
+                INICIAR DESAFIO
             </Button>
 
-            <p className="mt-10 text-xs text-gray-400">
-                Projeto feito por <a href="https://www.linkedin.com/in/pablohaddad/">Pablo Haddad</a>
-            </p>
-            <RankingScreen
-                isIntro={true}
-                tempoTotal={tempoTotal}
-                ranking={ranking}
-                loading={loading}
-                onRankingUpdate={onRankingUpdate}
-            />
-        </div>
+            <Text size="xs" c="dimmed">
+                Projeto feito por <Anchor href="https://www.linkedin.com/in/pablohaddad/" target="_blank">Pablo Haddad</Anchor>
+            </Text>
+            </Stack>
+        </Paper>
     );
 }
 

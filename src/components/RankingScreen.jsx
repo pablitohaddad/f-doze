@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react';
+import { Anchor, Paper, Stack, Text, Title } from '@mantine/core';
 import RankingHeader from './Ranking/RankingHeader';
 import RankingForm from './Ranking/RankingForm';
 import RankingList from './Ranking/RankingList';
@@ -50,27 +51,29 @@ function RankingScreen({ tempoTotal, ranking, onRankingUpdate, loading, isIntro 
     };
 
     return (
-        <div className="text-center">
+        <Stack align="center" gap="xs" mt="lg">
             <RankingHeader isIntro={isIntro} tempoTotal={tempoTotal} />
             {(!salvo && !isIntro) && (
                 <RankingForm nome={nome} setNome={setNome} saving={saving} onSave={handleSave} />
             )}
             <RankingStats ranking={ranking} />
-            <h3 className="mt-10 text-xl font-semibold text-green-300">TOP 10 GLOBAL</h3>
-            {loading ? (
-                <p className="text-gray-200">Carregando ranking global...</p>
-            ) : (
-                <>
-                    {!isIntro && (<p className="text-green-300">
-                        {salvo ? `Você conquistou o ${posicaoTemporaria}º lugar!` : `Seu tempo lhe daria o ${posicaoTemporaria}º lugar.`}
-                    </p>)}
-                    <RankingList ranking={ranking} nome={nome} tempoTotal={tempoTotal} salvo={salvo} />
-                </>
-            )}
-            <p className="mt-8 text-sm text-gray-300">
-                Veja o <a href="https://github.com/pablitohaddad/f-doze" target="_blank" rel="noopener noreferrer">Codigo Fonte</a> do projeto!
-            </p>
-        </div>
+            <Paper withBorder radius="md" p="md" w="100%" maw={520}>
+                <Title order={3} ta="center">Top 10 global</Title>
+                {loading ? (
+                    <Text c="dimmed" mt="sm">Carregando ranking global...</Text>
+                ) : (
+                    <>
+                        {!isIntro && (<Text c="dimmed" mt="sm">
+                            {salvo ? `Você conquistou o ${posicaoTemporaria}º lugar!` : `Seu tempo lhe daria o ${posicaoTemporaria}º lugar.`}
+                        </Text>)}
+                        <RankingList ranking={ranking} nome={nome} tempoTotal={tempoTotal} salvo={salvo} />
+                    </>
+                )}
+            </Paper>
+            <Text mt="sm" size="sm" c="dimmed">
+                Veja o <Anchor href="https://github.com/pablitohaddad/f-doze" target="_blank" rel="noopener noreferrer">Código Fonte</Anchor> do projeto!
+            </Text>
+        </Stack>
     );
 }
 

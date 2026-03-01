@@ -1,9 +1,10 @@
 import React from 'react';
+import { Text } from '@mantine/core';
 
 export default function RankingStats({ ranking }) {
   return (
-    <p className="text-sm text-gray-200">
-      <span className="font-bold text-yellow-300">{ranking.length}</span> pessoas já jogaram f-doze!
-    </p>
+    <Text size="sm" c="dimmed">
+      <Text span fw={700}>{ranking.length}</Text> pessoas já jogaram f-doze!
+    </Text>
   );
 }

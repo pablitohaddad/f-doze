@@ -1,23 +1,23 @@
 import React from 'react';
+import { List, Text } from '@mantine/core';
 
 const formatTime = (ms) => (ms / 1000).toFixed(2);
 
 export default function RankingList({ ranking, nome, tempoTotal, salvo }) {
+  if (ranking.length === 0) {
+    return <Text size="sm" c="dimmed">Ranking vazio, seja o primeiro a liderá-lo!</Text>;
+  }
+
   return (
-    <ol className="mx-auto my-4 max-w-md list-decimal space-y-2 pl-6 text-left">
-      {ranking.length === 0 ? (
-        <p className="text-sm text-gray-300">Ranking vazio, seja o primeiro a lidera-lo!</p>
-      ) : ranking.map((record, index) => (
-        <li
+    <List withPadding my="md" maw={420} mx="auto" ta="left">
+      {ranking.map((record, index) => (
+        <List.Item
           key={index}
-          className={(record.nome === nome && record.tempo === tempoTotal && salvo)
-            ? 'font-bold text-yellow-300'
-            : 'text-green-300'
-          }
+          c={(record.nome === nome && record.tempo === tempoTotal && salvo) ? 'blue' : 'dark'}
         >
           {index + 1}º - {record.nome} ({formatTime(record.tempo)}s)
-        </li>
+        </List.Item>
       ))}
-    </ol>
+    </List>
   );
 }
