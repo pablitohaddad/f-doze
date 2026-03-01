@@ -1,4 +1,5 @@
 import React from 'react';
+import { Alert, Paper, Stack, Text, Title } from '@mantine/core';
 import Input from './common/Input';
 import Button from './common/Button';
 
@@ -31,10 +32,11 @@ function DesafioCSS({ onSucesso }) {
     };
 
     return (
-        <div className="text-center">
-            <h3 className="text-xl font-semibold text-green-300">Nível 3: CSS</h3>
-            <p className="text-gray-300">Uma chave de avanço está nesta página</p>
-            <p className="text-gray-300">Sua missão é **revelar a chave** inspecionando o código.</p>
+        <Paper withBorder radius="md" p="lg" maw={560} mx="auto" my="md">
+            <Stack gap="sm">
+            <Title order={3}>Nível 3: CSS</Title>
+            <Text c="dimmed">Uma chave de avanço está nesta página.</Text>
+            <Text c="dimmed">Sua missão é revelar a chave inspecionando o código.</Text>
             
             <div className="mx-auto my-6 p-2">
                 <span style={chaveStyle}>
@@ -42,20 +44,21 @@ function DesafioCSS({ onSucesso }) {
                 </span>
             </div>
 
-            <form onSubmit={handleCheck} className="mx-auto my-5 max-w-md p-4">
+            <form onSubmit={handleCheck}>
                 <Input
                     type="text"
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     placeholder="Cole a chave revelada aqui..."
                 />
-                <Button type="submit" className="mt-3">Verificar Chave</Button>
+                <Button type="submit" mt="sm">Verificar chave</Button>
             </form>
 
-            <p className="mt-8 border-l-2 border-orange-400 pl-2 text-left text-sm text-orange-300">
-                // DICA: Esse site esta FEIO de mais.
-            </p>
-        </div>
+            <Alert variant="light" color="yellow">
+                Dica: esse site está feio demais.
+            </Alert>
+            </Stack>
+        </Paper>
     );
 }
 

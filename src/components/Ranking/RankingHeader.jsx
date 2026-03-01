@@ -1,12 +1,13 @@
 import React from 'react';
+import { Text, Title } from '@mantine/core';
 
 export default function RankingHeader({ isIntro, tempoTotal }) {
   const formatTime = (ms) => (ms / 1000).toFixed(2);
   return (
     <>
-      {!isIntro && (<h2 className="text-2xl font-bold text-green-300">DESAFIO CONCLUÍDO!</h2>)}
+      {!isIntro && (<Title order={2}>Desafio concluído!</Title>)}
       {!isIntro && (
-        <h3 className="mt-2 text-yellow-300">Seu Tempo: {formatTime(tempoTotal)} segundos</h3>
+        <Text mt="xs" c="dimmed">Seu tempo: {formatTime(tempoTotal)} segundos</Text>
       )}
     </>
   );

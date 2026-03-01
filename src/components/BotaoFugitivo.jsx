@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from "react";
+import { Alert, Paper, Text, Title } from '@mantine/core';
 
 function BotaoFugitivo( {onSucesso }){
 
@@ -37,21 +38,22 @@ function BotaoFugitivo( {onSucesso }){
     };
 
     return (
-        <div className="relative mx-auto my-5 h-[400px] w-full overflow-hidden border-2 border-fuchsia-500 bg-slate-950 shadow-[0_0_15px_rgba(255,0,255,0.8)]">
-            <h3 className="mb-4 text-lg font-semibold text-fuchsia-300">Desafio 2: cliqueNoBotao()</h3>
+        <Paper withBorder radius="md" p="md" className="relative mx-auto my-5 h-[400px] w-full overflow-hidden">
+            <Title order={3} mb="xs">Desafio 2: cliqueNoBotao()</Title>
+            <Text size="sm" c="dimmed">Passe o mouse no botão e use o console para avançar.</Text>
 
             <button
                 onMouseMove={handleMouseMove}
                 style={buttonStyle}
-                className="cursor-default rounded-md border-2 border-black bg-fuchsia-500 px-6 py-3 text-lg font-bold uppercase text-slate-950 shadow-[0_0_15px_rgba(255,0,255,0.9)]"
+                className="cursor-default rounded-md border border-gray-300 bg-white px-6 py-3 text-sm font-semibold text-gray-900 shadow-sm"
             >
                 {cliqueNoBotao}
             </button>
 
-            <p className="absolute bottom-2 left-2 border-l-2 border-orange-400 pl-2 text-sm text-orange-300">
-                // DICA: Console
-            </p>
-        </div>
+            <div className="absolute bottom-2 left-2 right-2">
+              <Alert variant="light" color="yellow">Dica: Console.</Alert>
+            </div>
+        </Paper>
     );
 }
 
