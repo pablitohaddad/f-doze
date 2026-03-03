@@ -6,6 +6,8 @@ import BotaoFugitivo from '../components/BotaoFugitivo';
 import DesafioCSS from '../components/DesafioCSS';
 import LocalStorage from '../components/LocalStorage';
 import IntroScreen from '../components/IntroScreen';
+import RankingScreen from '../components/RankingScreen';
+import { API_RESULTADOS } from '../api';
 
 const DESAFIOS = [LoginScreen, BotaoFugitivo, DesafioCSS, LocalStorage];
 
@@ -18,6 +20,33 @@ export default function JogoPage() {
   const [faseAtual, setFaseAtual] = useState(FASE_INTRO);
   const [tempoInicio, setTempoInicio] = useState(null);
   const [tempoFinal, setTempoFinal] = useState(null);
+  const [ranking, setRanking] = useState([]);
+  const [loadingRanking, setLoadingRanking] = useState(true);
+
+  const fetchRanking = useCallback(async () => {
+    setLoadingRanking(true);
+    try {
+      const response = await fetch(API_RESULTADOS);
+      const data = await response.json();
+      const lista = Array.isArray(data) ? data : (data.content || []);
+      const rankingFormatado = lista
+        .map(item => ({
+          nome: item.nome,
+          tempo: Number(item.tempo_ms ?? item.tempoMs ?? 0)
+        }))
+        .filter(item => Number.isFinite(item.tempo) && item.tempo >= 0)
+        .sort((a, b) => a.tempo - b.tempo)
+        .slice(0, 10);
+      setRanking(rankingFormatado);
+    } catch (error) {
+      console.error('Erro ao buscar ranking:', error);
+    }
+    setLoadingRanking(false);
+  }, []);
+
+  useEffect(() => {
+    fetchRanking();
+  }, [fetchRanking]);
 
   const iniciarDesafio = () => {
     setTempoInicio(Date.now());
@@ -72,11 +101,12 @@ export default function JogoPage() {
       })()}
 
       {faseAtual === FASE_CONCLUIDO && tempoFinal !== null && (
-        <Card withBorder radius="md" p="lg">
-          <Title order={3}>Parabéns, desafio concluído!</Title>
-          <Text mt="xs" c="dimmed">Seu tempo final foi de {((tempoFinal - tempoInicio) / 1000).toFixed(2)}s.</Text>
-          <Text mt="sm" c="dimmed">Veja o ranking no menu superior, na aba “Ranking”.</Text>
-        </Card>
+        <RankingScreen
+          tempoTotal={tempoFinal - tempoInicio}
+          ranking={ranking}
+          loading={loadingRanking}
+          onRankingUpdate={fetchRanking}
+        />
       )}
     </Card>
   );
