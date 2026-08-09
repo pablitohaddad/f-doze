@@ -45,7 +45,7 @@ function BotaoFugitivo( {onSucesso }){
             <button
                 onMouseMove={handleMouseMove}
                 style={buttonStyle}
-                className="cursor-default rounded-md border border-gray-300 bg-white px-6 py-3 text-sm font-semibold text-gray-900 shadow-sm"
+                className="cursor-default border-2 border-black bg-white px-6 py-3 text-sm font-black uppercase text-gray-900 shadow-[4px_4px_0_0_#000]"
             >
                 {cliqueNoBotao}
             </button>

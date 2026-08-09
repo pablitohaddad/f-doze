@@ -7,7 +7,7 @@ import Button from './common/Button';
 const toUrlEncoded = (data) => {
     const params = new URLSearchParams();
     for (const key in data) {
-        if (data.hasOwnProperty(key)) {
+        if (Object.prototype.hasOwnProperty.call(data, key)) {
              params.append(key, data[key]);
         }
     }
@@ -40,7 +40,7 @@ function LoginScreen({ onSucesso }) {
             body: bodyForm,
         });
         
-    } catch (fetchError) {
+    } catch {
         console.warn("A requisição simulada falhou");
     }
     

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Accordion, Anchor, AspectRatio, Badge, Card, List, Stack, Text, Title } from '@mantine/core';
+import { Accordion, Anchor, AspectRatio, Badge, Paper, List, Stack, Text, Title } from '@mantine/core';
 
 const STUDY_TOPICS = [
   {
@@ -106,19 +106,21 @@ const STUDY_TOPICS = [
 
 export default function EstudosPage() {
   return (
-    <Card withBorder radius="lg" shadow="sm" p="xl">
-      <Title order={2} mb="md">Estudos</Title>
-      <Text c="dimmed" mb="lg">
-        Clique em cada card para expandir o conteúdo. A seta indica quando está fechado/aberto.
-      </Text>
+    <Stack gap="lg">
+      <Paper className="p-6 md:p-8">
+        <Title order={2}>./ESTUDOS_GUIADOS</Title>
+        <Text c="dimmed" className="mt-2">
+          Explore cada tema do DevTools com material prático, vídeos e sugestões de treino.
+        </Text>
+      </Paper>
 
-      <Accordion variant="separated" radius="md" chevronPosition="right">
+      <Accordion variant="separated" radius="lg" chevronPosition="right">
         {STUDY_TOPICS.map((topic) => (
           <Accordion.Item key={topic.key} value={topic.key}>
             <Accordion.Control>
               <Stack gap={2}>
-                <Text fw={700}>{topic.title}</Text>
-                <Badge variant="light" w="fit-content">{topic.tag}</Badge>
+                <Text fw={900}>{topic.title.toUpperCase()}_</Text>
+                <Badge className="!w-fit">{topic.tag}</Badge>
               </Stack>
             </Accordion.Control>
             <Accordion.Panel>
@@ -126,7 +128,7 @@ export default function EstudosPage() {
                 <Text c="dimmed">{topic.context}</Text>
 
                 <div>
-                  <Text fw={600} size="sm" mb={4}>Assista</Text>
+                  <Text fw={900} size="sm" mb={4}>ASSISTA_</Text>
                   <Stack gap="sm">
                     {topic.videos.map((item) => (
                       <div key={item.url}>
@@ -146,7 +148,7 @@ export default function EstudosPage() {
                 </div>
 
                 <div>
-                  <Text fw={600} size="sm" mb={4}>Leitura complementar</Text>
+                  <Text fw={900} size="sm" mb={4}>LEITURA_COMPLEMENTAR_</Text>
                   <List spacing={4} size="sm">
                     {topic.reading.map((item) => (
                       <List.Item key={item.url}>
@@ -157,7 +159,7 @@ export default function EstudosPage() {
                 </div>
 
                 <div>
-                  <Text fw={600} size="sm" mb={4}>Prática sugerida</Text>
+                  <Text fw={900} size="sm" mb={4}>PRÁTICA_SUGERIDA_</Text>
                   <List spacing={4} size="sm">
                     {topic.practice.map((item) => (
                       <List.Item key={item}>{item}</List.Item>
@@ -169,6 +171,6 @@ export default function EstudosPage() {
           </Accordion.Item>
         ))}
       </Accordion>
-    </Card>
+    </Stack>
   );
 }

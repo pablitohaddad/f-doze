@@ -9,13 +9,13 @@ export default function RankingList({ ranking, nome, tempoTotal, salvo }) {
   }
 
   return (
-    <List withPadding my="md" maw={420} mx="auto" ta="left">
+    <List withPadding my="md" maw={420} mx="auto" ta="left" className="w-full">
       {ranking.map((record, index) => (
         <List.Item
           key={index}
-          c={(record.nome === nome && record.tempo === tempoTotal && salvo) ? 'blue' : 'dark'}
+          className={(record.nome === nome && record.tempo === tempoTotal && salvo) ? 'bg-green-300 font-black text-black' : 'text-gray-800'}
         >
-          {index + 1}º - {record.nome} ({formatTime(record.tempo)}s)
+          <span className="font-semibold">{index + 1}º</span> — {record.nome} ({formatTime(record.tempo)}s)
         </List.Item>
       ))}
     </List>

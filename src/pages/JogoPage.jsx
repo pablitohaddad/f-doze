@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { Card, Text, Title } from '@mantine/core';
+import { Paper, Stack, Text, Title } from '@mantine/core';
 
 import LoginScreen from '../components/LoginScreen';
 import BotaoFugitivo from '../components/BotaoFugitivo';
@@ -76,38 +76,45 @@ export default function JogoPage() {
 
         return () => clearInterval(interval);
       }
+      // O componente local captura estes valores da fase atual de propósito.
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [tempoInicio, tempoFinal]);
 
     const tempoAExibir = tempoFinal !== null ? tempoFinal - tempoInicio : tempoDecorrido;
     const segundos = (tempoAExibir / 1000).toFixed(2);
 
-    return <Text my="sm" c="dimmed">Tempo: {segundos}s</Text>;
+    return <Text className="mb-4 inline-block border-2 border-black bg-yellow-300 px-3 py-1 font-black">TEMPO: {segundos}s</Text>;
   };
 
   return (
-    <Card withBorder radius="lg" shadow="sm" p="xl">
-      {faseAtual >= FASE_PRIMEIRO_DESAFIO && faseAtual <= FASE_ULTIMO_DESAFIO && <Cronometro />}
+    <Stack gap="lg">
+      <Paper className="p-6 md:p-8">
+        <Title order={2}>./MODO_DESAFIO</Title>
+        <Text c="dimmed" className="mt-2">Acompanhe cada etapa, resolva as pistas e encerre com um tempo digno de destaque.</Text>
+      </Paper>
 
-      {faseAtual === FASE_INTRO && (
-        <IntroScreen
-          onStart={iniciarDesafio}
-        />
-      )}
+      <Paper className="p-4 md:p-6">
+        {faseAtual >= FASE_PRIMEIRO_DESAFIO && faseAtual <= FASE_ULTIMO_DESAFIO && <Cronometro />}
 
-      {faseAtual >= FASE_PRIMEIRO_DESAFIO && faseAtual <= FASE_ULTIMO_DESAFIO && (() => {
-        const indiceDesafio = faseAtual - FASE_PRIMEIRO_DESAFIO;
-        const DesafioAtual = DESAFIOS[indiceDesafio];
-        return <DesafioAtual onSucesso={avancarFase} />;
-      })()}
+        {faseAtual === FASE_INTRO && (
+          <IntroScreen onStart={iniciarDesafio} />
+        )}
 
-      {faseAtual === FASE_CONCLUIDO && tempoFinal !== null && (
-        <RankingScreen
-          tempoTotal={tempoFinal - tempoInicio}
-          ranking={ranking}
-          loading={loadingRanking}
-          onRankingUpdate={fetchRanking}
-        />
-      )}
-    </Card>
+        {faseAtual >= FASE_PRIMEIRO_DESAFIO && faseAtual <= FASE_ULTIMO_DESAFIO && (() => {
+          const indiceDesafio = faseAtual - FASE_PRIMEIRO_DESAFIO;
+          const DesafioAtual = DESAFIOS[indiceDesafio];
+          return <DesafioAtual onSucesso={avancarFase} />;
+        })()}
+
+        {faseAtual === FASE_CONCLUIDO && tempoFinal !== null && (
+          <RankingScreen
+            tempoTotal={tempoFinal - tempoInicio}
+            ranking={ranking}
+            loading={loadingRanking}
+            onRankingUpdate={fetchRanking}
+          />
+        )}
+      </Paper>
+    </Stack>
   );
 }

@@ -5,9 +5,9 @@ import Button from '../common/Button';
 
 export default function RankingForm({ nome, setNome, saving, onSave }) {
   return (
-    <Paper withBorder radius="md" p="md" maw={320} mx="auto" my="md">
+    <Paper className="mx-auto my-2 w-full max-w-[360px] p-4">
       <form onSubmit={onSave}>
-        <Text size="sm" mb="sm">Entre no Ranking Global!</Text>
+        <Text size="sm" mb="sm" fw={900}>ENTRE_NO_RANKING_GLOBAL!</Text>
         <Input
           type="text"
           value={nome}

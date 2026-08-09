@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">F12 — F-DOZE</title>
+  <rect width="64" height="64" fill="#111827"/>
+  <rect x="4" y="4" width="56" height="56" fill="none" stroke="#ffffff" stroke-width="4"/>
+  <rect x="8" y="48" width="48" height="8" fill="#60a5fa"/>
+  <text x="32" y="41" fill="#ffffff" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="30" font-weight="900" text-anchor="middle" letter-spacing="-3">F<tspan fill="#60a5fa">12</tspan></text>
+</svg>

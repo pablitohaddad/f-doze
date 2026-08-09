@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Text, Title } from '@mantine/core';
+import { Paper, Stack, Text, Title } from '@mantine/core';
 import RankingScreen from '../components/RankingScreen';
 import { API_RESULTADOS } from '../api';
 
@@ -33,9 +33,13 @@ export default function RankingPage() {
   }, []);
 
   return (
-    <Card withBorder radius="lg" shadow="sm" p="xl">
-      <Title order={2}>Ranking</Title>
-      <Text c="dimmed" mt="xs">Acompanhe os melhores tempos globais do F-DOZE.</Text>
+    <Stack gap="lg">
+      <Paper className="p-6 md:p-8">
+        <Title order={2}>./RANKING_GLOBAL</Title>
+        <Text c="dimmed" className="mt-2">
+          Veja os melhores tempos, acompanhe a evolução e desafie-se a fazer melhor.
+        </Text>
+      </Paper>
       <RankingScreen
         isIntro={true}
         tempoTotal={0}
@@ -43,6 +47,6 @@ export default function RankingPage() {
         loading={loadingRanking}
         onRankingUpdate={fetchRanking}
       />
-    </Card>
+    </Stack>
   );
 }
